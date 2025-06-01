@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/moha/.zsh/completions:"* ]]; then export FPATH="/home/moha/.zsh/completions:$FPATH"; fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -113,12 +115,12 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv init --path)"
+# eval "$(pyenv virtualenv-init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
 
 
 export NVM_DIR="$HOME/.nvm"
@@ -126,10 +128,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
-export DENO_INSTALL="/home/moha/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-export PATH="/home/moha/.local/share/solana/install/active_release/bin:$PATH"
+# export DENO_INSTALL="/home/moha/.deno"
+# export PATH="$DENO_INSTALL/bin:$PATH"
+
 alias tmux="TERM=screen-256color-bce tmux"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # pnpm
 export PNPM_HOME="/home/moha/.local/share/pnpm"
@@ -138,6 +143,24 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+#
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$PATH:/opt/nvim-linux64/bin"
+alias lg=lazygit
+. "/home/moha/.deno/env"
+
+# Rust environment variables
+export RUSTUP_HOME="$HOME/.rustup"
+export CARGO_HOME="$HOME/.cargo"
+
+# Add Cargo's bin directory to PATH
+export PATH="$CARGO_HOME/bin:$PATH"
+alias nv='nvim .\' 
+alias please=sudo
+alias ld=lazydocker
+export EDITOR=nvim
+export NOTE_HOME=projects/nvim
+export AWS_PROFILE=personal
+# Go environment setup
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/projects/go
+export PATH=$PATH:$GOPATH/bin
