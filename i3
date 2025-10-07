@@ -201,7 +201,13 @@ bindsym $mod+Shift+o exec --no-startup-id urxvt -e scrot -s ~/Pictures/screensho
 #
 # exec --no-startup-id export XDG_CURRENT_DESKTOP=GNOME
 #
+bindsym $mod+Shift+a exec i3lock 
 bindsym $mod+c exec --no-startup-id google-chrome --password-store=gnome-keyring
 bindsym $mod+b exec qutebrowser
 bindsym $mod+Shift+b exec --no-startup-id qutebrowser --target=window
-
+# Set keyboard layout to US English
+exec --no-startup-id setxkbmap us
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui
+exec --no-startup-id feh --bg-scale ~/Downloads/background.jpg
+exec --no-startup-id picom --backend glx --no-fading-openclose
+exec_always --no-startup-id ~/.fehbg
