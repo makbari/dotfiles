@@ -134,6 +134,16 @@ export NVM_DIR="$HOME/.nvm"
 alias tmux="TERM=screen-256color-bce tmux"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# For Zsh
+fzf-history-widget() {
+  local selected=$(history -n 1 | fzf --height 40% --reverse --tac)
+  if [[ -n "$selected" ]]; then
+    zle -U "$selected"
+  fi
+  zle reset-prompt
+}
+zle -N fzf-history-widget
+bindkey '^r' fzf-history-widget
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # pnpm
