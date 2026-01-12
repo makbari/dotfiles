@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+FD_BIN=$(command -v fdfind || command -v fd)
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$($FD_BIN --type f --hidden --exclude .git . ~/projects | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_dir=$(dirname "$selected")
+selected_name=$(basename "$selected_dir" | tr . _)
+
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s "$selected_name" -c "$selected_dir" "nvim $selected; zsh"
+    exit 0
+fi
+
+if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+    # We create the session and open the specific file in nvim
+    tmux new-session -ds "$selected_name" -c "$selected_dir" "nvim $selected"
+else
+    :
+fi
+
+if [[ -z $TMUX ]]; then
+    tmux attach-session -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi
